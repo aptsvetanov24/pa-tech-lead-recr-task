@@ -1,0 +1,9 @@
+[[pages]]
+path = "pages/page1.py"
+name = "Happiness across the world"
+icon = ":earth_africa:"
+
+[[pages]]
+path = "pages/page2.py"
+name = "Happiness comparator"
+icon = ":chart:"

@@ -8,6 +8,7 @@ import modules.utils as utils
 ###         1. DATA PROCESSING   (Load and clean)           ###
 ###############################################################
 # Set the columns existing in all the dataframes
+existing_columns = config.ALL_COLUMNS
 final_columns = config.FINAL_COLUMNS
 
 #   Load the data from the CSV files
@@ -20,7 +21,7 @@ for key in happiness_data.keys():
     happiness_data[key]['Year'] = key
 
     # Rename the columns in the dataframe using the key word
-    for col in final_columns:
+    for col in existing_columns:
         happiness_data[key] = utils.rename_column_by_key_word(happiness_data[key], col)
 
 
@@ -45,5 +46,9 @@ for key in happiness_data.keys():
     counter += 1
 
 # Concatenate all dataframes into one and drop cases without region or country  
-df = pd.concat([df_current[final_columns] for df_current in happiness_data.values()])
+df = pd.concat([df_current[existing_columns] for df_current in happiness_data.values()])
 df = df[df['Country'].notna() & df['Region'].notna()]
+df = utils.rename_column_by_key_word_with_new_name(df, 'Rank', 'Rank per year')
+df = utils.rename_column_by_key_word_with_new_name(df, 'Score', 'Happiness Score')
+df['Rank'] = df['Happiness Score'].rank(ascending=False, method='dense')
+df = df[final_columns]
