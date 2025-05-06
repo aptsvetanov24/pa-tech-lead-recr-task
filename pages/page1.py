@@ -79,19 +79,5 @@ def app():
     
 
     
-    # # ---------------  Page layout
-    # st.markdown(
-    #     """
-    #     <style>
-    #     .reportview-container {
-    #         background: url("https://www.example.com/image.jpg");
-    #     }
-    # </style>
-    #     """,
-    #     unsafe_allow_html=True
-    # )
-
-
-
 if __name__ == "__main__":
     app()
