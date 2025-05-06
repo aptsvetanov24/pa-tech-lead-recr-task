@@ -27,7 +27,7 @@ def app():
     with col2:
         selected_country = st.selectbox(
             "Country:",
-            options = ['All'] + df['Country'].unique().tolist(),
+            options = ['All'] + sorted(df['Country'].unique().tolist()),
             help = "Select a country to filter the data",
             index = 0  # Default value All
         )
@@ -36,7 +36,7 @@ def app():
     with col3:
         selected_region = st.selectbox(
             "Region:",
-            options = ['All'] + df['Region'].unique().tolist(),
+            options = ['All'] + sorted(df['Region'].unique().tolist()),
             help = "Select a region to filter the data",
             index = 0  # Default value All
         )

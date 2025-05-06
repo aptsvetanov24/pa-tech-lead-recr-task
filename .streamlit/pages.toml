@@ -5,5 +5,10 @@ icon = ":earth_africa:"
 
 [[pages]]
 path = "pages/page2.py"
-name = "Happiness comparator"
+name = "Happiness correlation"
 icon = ":chart:"
+
+[[pages]]
+path = "pages/page3.py"
+name = "Happiness trends"
+icon = ":chart_with_upwards_trend:"

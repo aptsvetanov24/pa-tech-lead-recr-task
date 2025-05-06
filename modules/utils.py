@@ -41,6 +41,8 @@ def rename_column_by_key_word_with_new_name(df, key_word, new_name):
     # print(f"No column found with the key word '{key_word}'")    
     return df
 
+
+#Used only for QA:
 def check_for_duplicates_by_key_word(df, key_word):
     # Check for duplicates in the specified column
     for column_name in df.columns:
@@ -98,6 +100,9 @@ def refresh_data(df,
     if update_sort: result = sort_dataframe(result, max_rows = max_rows, option = option, score_column = score_column, show_all = show_all)
     return result
 
+###############################################################
+###         3. COMPONENTS CORRELATION                       ###
+###############################################################
 def get_most_influential_compoment(df, components = config.CORRELATION_COLUMNS):
     # Calculate the correlation matrix
     corr = df[[config.HAPPINESS_COLUMN] + config.CORRELATION_COLUMNS].corr()
@@ -128,3 +133,23 @@ def plot_correlation_matrix(df, component, figsize=(8, 6)):
     plt.grid(True)
 
     return plt
+
+###############################################################
+###         4. HAPPINESS TRENDS                             ###
+###############################################################
+def plot_happiness_trends(df, selected_countries, figsize=(8, 6)):
+    # Set up the matplotlib figure
+    # Plotting the trend chart
+    fig, ax = plt.subplots(figsize=figsize)
+    for country in selected_countries:
+        country_data = df[df['Country'] == country]
+        ax.plot(country_data['Year'], country_data['Happiness Score'], marker='o', label=country)
+
+    # Customize the plot
+    ax.set_title('Happiness Score Trend by Country')
+    ax.set_xlabel('Year')
+    ax.set_ylabel('Happiness Score')
+    ax.legend(title='Country', bbox_to_anchor=(1.05, 1), loc='upper left')
+    ax.grid(True)
+
+    return fig
