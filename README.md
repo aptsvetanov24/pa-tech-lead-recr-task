@@ -1,85 +1,66 @@
 # 🌍 World Happiness Dashboard
 
-Welcome!
+Hello!
 
-This take-home assignment is designed to help us understand your Python, data wrangling, and lightweight app-building skills. It's based on the **World Happiness Report** dataset and is intended to be practical, open-ended, and fun.
+This is an exploration app for happiness scores across the world.
 
-## 🎯 Objective
+## Set-up
 
-Build an interactive [Streamlit app](https://streamlit.io/) that allows users to explore and compare happiness metrics across countries and years.
+- Fork the repo of the app from the following link: https://github.com/aptsvetanov24/pa-tech-lead-recr-task, or download the whole project on your local machine
 
-You'll use the World Happiness dataset and [Pandas](https://pandas.pydata.org) + Streamlit to:
-- Load and clean the data
-- Visualize happiness scores across countries, regions, and time
-- Allow simple filtering and exploration
+- If you've forked the repo in your own GitHub account, open terminal/CMD on your local machine and navigate to the directory where you want to clone the repo, then write "git clone [link to the forked repo from your GitHub account]"
+
+- Once you have all the app files on your local machine, you should create your virtual enviroment and install the libraries needed for the source code
+
+- After you navigate to your app directory, create your virtual enviroment: "python -m venv env" (env is the name of the venv)
+
+- Then you should activate the venv: ".\env\Scripts\activate". This should run the .\env\Scripts\activate.ps1 script and activate your env. However if you encounter any issues with the activation you can try "Set-ExecutionPolicy Unrestricted -Scope Process" and then again ".\env\Scripts\activate"
+
+- Once you've activated your venv you should install the libraries used in the source code (also available in the requirements.txt file):
+pandas==2.2.3
+streamlit==1.45.0
+st-pages==1.0.1
+seaborn==0.13.2
+matplotlib==3.10.1
+
+- When all the points from above are done you can run the app with the following command "streamlit run .\happiness_comparator.py"
+
+## App overview
+
+- On the left side on your screen there is a navigation pane containing all 3 pages included in the app.
+
+- "Happiness accross the world" is table containing columns such as year, country, happiness score etc. This table could be filtered by Year, Country and Region. You can also get the top/bottom N rows (ranked by happiness score) or just show all available rows (according to the filters above the table) by checking the "All rows" checkbox.
+
+- "Happiness correlation" is scatter plot of happiness score vs one of the components health, freedom, generosity. When you select your filters from the first row, just below them you can see the most influlential component for the happiness score. And when you select one of the 3 components, scatter plot will be updated based on your 3 filters.
+
+- "Happiness trends" is the last page that shows the happines trend through the years for all selected countries from the drop down menu above the plot.
+
+## Code overview
+
+1. **Main file** happiness_comparator.py contains only reference to the pages (from folder "pages") and their labels and icons in file ".streamlit/pages.toml".
+
+2. **Folder ".streamlit"** contains .toml files:
+   - "pages.toml" contains the path, name (title), and icon for each page.
+   - "config.toml" contains the default colors and fonts of the pages.
+
+3. **Folder "data"** contains the raw data (5 csv files for years 2015 ti 2019)
+
+4. **Folder "modules** contains 3 python scripts:
+   - "data_processing.py" loads and cleans the data before it is used in the app.
+   - "config.py" contains some arguments used in other python scripts (utils.py and all the pages scripts).
+   - "utils.py" contains functions used in the "data_processing.py" and all 3 pages scripts. 
+
+5. **Folder "pages** contains all 3 pages scripts:
+   - "page1.py" contains 3 drop down menus (selectbox) for Year, Country and Region data filtering. Also radio buttons for switchih between top/bottom scores, and "Maximum number of rows" field (number_input) which is active only if the "All rows" is not checked. The data is refreshed each time any of the 6 components is changed by the user via "refresh_data" from "modules/utils.py".
+
+   - "page2.py" contains the same 3 drop downs as "page1.py". When filter is changed (again via "refresh_data" from "modules/utils.py") the text next to "Most influential for happiness based on the filters above is:" is updated.
+   The scatter plot at the bottom is also updated the same way but also considering the components drop down menu above the plot (the one under "Happiness Score correlation with:").
+
+   - "page3.py" contains one drop down with multiple selection (multiselect) and based on the selection the trends plot is updated via "plot_happiness_trends"  from "modules/utils.py".
 
 
-## 🗃️ Dataset
-
-The World Happiness data is available in the /data folder of this repository as individual per year csv files that hold happines KPIs. 
-
-## 📌 Features (Minimum)
-
-Your Streamlit app should allow the user to:
-
-1. **Select a year** (if using multi-year data)
-2. **Filter by region** or country
-3. **View happiness rankings**
-   - Display top N happiest countries
-   - Display bottom N countries
-4. **Plot correlations** between score components and happiness score
-
-Bonus:
-- Time trend visualizations (if using multi-year)
-- Display (your) statistical insights (e.g., "most influential factor")
-- Add explanations or hover-tooltips for variables
-- Change the default color scheme to something that you like.
-- Do a multi-page app.
-
-## 🛠️ Tech Requirements
-
-- Python 3.9 - 3.11
-- Pandas
-- Streamlit
-- Any data viz libs you're comfortable with (Matplotlib, Seaborn, Plotly, etc.)
-- At minimum, have a requirements.txt file and a README.md files that explain how to run your app locally.
-
-## 📦 Submission Guidelines
-
-Please share a GitHub repo or a zipped folder containing:
-
-- Your source code as Python scripts
-- `README.md` with setup instructions
-- `requirements.txt` for dependencies
-- Bonus: `Dockerfile` if you'd like to show deployment readiness (optional)
-- Bonus: Use an environment manager, such as [uv](https://docs.astral.sh/uv/guides/install-python)
-- Bonus: Figure out how to host your app publicly without paying any money.
+## Other comments
+I've tried to download "Docker Desktop" however I need admin access to my computer so I've written what I understood from reading some forums, and the content might be lame :D
 
 
-## ⏱️ Timeline
-Submissions are valid if the following criteria are completed - No longer than 7 callendar days after you're given access to this repo:
-- A solution needs to be submitted to your own github repository (unless a zip file is to be delivered.)
-- An email, informing Ivelin.Hristov@ipsos.com and HR.bulgaria@ipsos.com about the submission is sent through.
-- No changes or submissions will be accepted after this period.
 
-Pro tip: Focus on clarity, completeness, and pragmatism over perfection.
-
-## ✅ Evaluation Criteria
-
-We'll evaluate your submission based on:
-
-| Criteria                | Weight |
-|-------------------------|--------|
-| Code quality (clean, modular, readable) | ⭐⭐⭐⭐ |
-| Data handling & transformations | ⭐⭐⭐ |
-| Streamlit UI design & interactivity | ⭐⭐⭐ |
-| Visualizations & insights | ⭐⭐⭐ |
-| Self documentation & usability | ⭐⭐ |
-| Initiative & extras (bonus features, design, etc.) | ⭐⭐ |
-
-## 🙌 Good Luck!
-
-We’re excited to see how you explore this data and build an app. If you’d like to explain or highlight any part of your approach, feel free to leave a note in the README or as code comments.
-
-Happy coding!  
-— The PA Tech Team

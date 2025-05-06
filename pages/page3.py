@@ -14,7 +14,7 @@ def app():
     selected_countries = st.multiselect(
         "Countries:",
         options = sorted(df['Country'].unique().tolist()),
-        help = "Select the countires you want to see the trends for",
+        help = "Select the countires you want to see the happiness trends for",
         default = ['Bulgaria','Brazil','Finland','Ghana','Jamaica','Japan','Russia','United States'] # Default countries
     )
 

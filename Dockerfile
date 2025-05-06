@@ -1,23 +1,23 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
 
+# Update Python version to match your app requirements
+FROM python:3.10-slim
+
+# Install system dependencies if needed
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the current directory contents into the container
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the happiness_comparator.py script into the container
-COPY happiness_comparator.py /app/happiness_comparator.py
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Make port 8051 available to the world outside this container
+EXPOSE 8051
 
 # Define environment variable
-ENV NAME World
+ENV NAME ENV
 
 # Run happiness_comparator.py when the container launches
 CMD ["python", "happiness_comparator.py"]

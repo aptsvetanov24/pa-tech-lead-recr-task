@@ -143,12 +143,12 @@ def plot_happiness_trends(df, selected_countries, figsize=(8, 6)):
     fig, ax = plt.subplots(figsize=figsize)
     for country in selected_countries:
         country_data = df[df['Country'] == country]
-        ax.plot(country_data['Year'], country_data['Happiness Score'], marker='o', label=country)
+        ax.plot(country_data['Year'], country_data[config.HAPPINESS_COLUMN], marker='o', label=country)
 
     # Customize the plot
     ax.set_title('Happiness Score Trend by Country')
     ax.set_xlabel('Year')
-    ax.set_ylabel('Happiness Score')
+    ax.set_ylabel(config.HAPPINESS_COLUMN)
     ax.legend(title='Country', bbox_to_anchor=(1.05, 1), loc='upper left')
     ax.grid(True)
 
